@@ -4,8 +4,8 @@ require 'ruby_gntp'
 
 
 module CompassGrowl
-  ICON = File.join(File.expand_path('../', __FILE__), '..', 'assets', 'compass_icon.png')
-  GROWL = GNTP.new
+  ICON = File.join(File.expand_path('../../', __FILE__), 'assets', 'compass_icon.png')
+  GROWL = GNTP.new("Compass", "127.0.0.1")
 
   LOADED = "Compass Growl Loaded"
   STYLESHEET_SAVED = "Stylesheet Saved"
@@ -22,7 +22,7 @@ module CompassGrowl
     :name => type,
     :title =>  "Compass",
     :text => message,
-    :icon => "file://#{ICON}"
+    :icon => ICON
     })
   end
 
