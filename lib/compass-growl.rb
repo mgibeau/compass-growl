@@ -17,30 +17,31 @@ module CompassGrowl
                   { :name => STYLESHEET_ERROR, :enabled => true }]
   })
 
-  def growl(type, message)
+  def growl(type, title, message, sticky = false)
     GROWL.notify({
     :name => type,
-    :title =>  "Compass",
+    :title =>  title,
     :text => message,
-    :icon => ICON
+    :icon => ICON,
+    :sticky => sticky
     })
   end
 
   def init
-    CompassGrowl.growl(STYLESHEET_ERROR, "Compass Growl has been initialized")
+    CompassGrowl.growl(LOADED, "Init", "Compass Growl has been initialized")
 
     config = Compass.configuration
 
     config.on_stylesheet_saved do |filename|
-      CompassGrowl.growl(STYLESHEET_SAVED, "Stylesheet: #{File.basename(filename)} saved")
+      CompassGrowl.growl(STYLESHEET_SAVED, "Stylesheet", "#{File.basename(filename)} saved")
     end
 
     config.on_sprite_saved do |filename|
-      CompassGrowl.growl(SPRITE_SAVED, "Sprite: #{File.basename(filename)} saved")
+      CompassGrowl.growl(SPRITE_SAVED, "Sprite", "#{File.basename(filename)} saved")
     end
 
     config.on_stylesheet_error do |filename, error|
-      CompassGrowl.growl(STYLESHEET_ERROR, "Stylesheet Error: #{File.basename(filename)} \n had the following error:\n #{error}")
+      CompassGrowl.growl(STYLESHEET_ERROR, "Stylesheet Error", "#{File.basename(filename)} had the following error:\n #{error}", true)
     end
 
   end
